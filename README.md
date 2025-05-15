@@ -1,0 +1,1 @@
+Este proyecto consiste en la programacion de un cuadrupedo que funciona con generadores centrales de patrones usando osciladores y un sistema de atractores para mimetizar el movimiento angular de las patas de perros de raza media grande.

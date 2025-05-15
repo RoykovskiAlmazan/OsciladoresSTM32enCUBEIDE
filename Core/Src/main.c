@@ -13,6 +13,72 @@
   * in the root directory of this software component.
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
+
+
+          _           _    _        _          _              _      _          _       _            _               _
+        /\ \        /\ \ /\ \     /\_\       /\_\           /\ \   /\ \    _ / /\     / /\         /\_\            /\ \
+       /  \ \      /  \ \\ \ \   / / /      / / /  _       /  \ \  \ \ \  /_/ / /    / /  \       / / /  _         \ \ \
+      / /\ \ \    / /\ \ \\ \ \_/ / /      / / /  /\_\    / /\ \ \  \ \ \ \___\/    / / /\ \__   / / /  /\_\       /\ \_\
+     / / /\ \_\  / / /\ \ \\ \___/ /      / / /__/ / /   / / /\ \ \ / / /  \ \ \   / / /\ \___\ / / /__/ / /      / /\/_/
+    / / /_/ / / / / /  \ \_\\ \ \_/      / /\_____/ /   / / /  \ \_\\ \ \   \_\ \  \ \ \ \/___// /\_____/ /      / / /
+   / / /__\/ / / / /   / / / \ \ \      / /\_______/   / / /   / / / \ \ \  / / /   \ \ \     / /\_______/      / / /
+  / / /_____/ / / /   / / /   \ \ \    / / /\ \ \     / / /   / / /   \ \ \/ / /_    \ \ \   / / /\ \ \        / / /
+ / / /\ \ \  / / /___/ / /     \ \ \  / / /  \ \ \   / / /___/ / /     \ \ \/ //_/\__/ / /  / / /  \ \ \   ___/ / /__
+/ / /  \ \ \/ / /____\/ /       \ \_\/ / /    \ \ \ / / /____\/ /       \ \  / \ \/___/ /  / / /    \ \ \ /\__\/_/___\
+\/_/    \_\/\/_________/         \/_/\/_/      \_\_\\/_________/         \_\/   \_____\/   \/_/      \_\_\\/_________/
+
+									¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶
+									¶¶¶¶¶¶¶¶¶¶1_________________1¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶
+									¶¶¶¶¶¶¶¶1___111_1111111_1____¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶
+									¶¶¶¶¶¶¶1_1881188111111111____¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶
+									¶¶¶¶¶¶881188__¶___8111_______¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶
+									¶¶8881____1__________________¶¶¶¶¶¶¶¶¶888¶¶¶¶
+									¶11188¶¶¶¶¶¶¶¶¶¶881__________818¶¶¶¶¶¶¶¶18¶¶¶
+									¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶81___1¶_1¶¶¶¶¶¶¶¶¶11¶¶
+									¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶818¶¶¶¶¶¶¶¶¶¶¶¶18¶
+									¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶8888¶¶¶¶¶¶¶¶81¶
+									¶¶¶¶¶¶¶¶¶¶¶¶¶88888¶8¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶81¶
+									¶¶¶¶¶¶¶¶881111111111_11118888¶¶¶¶¶¶¶¶¶¶¶¶¶81¶
+									¶¶¶¶¶881881181111118¶¶¶88111111_____8¶¶¶¶¶¶1¶
+									¶¶¶¶¶8¶¶¶81111118¶¶¶¶¶81111881111_____1¶¶¶¶1¶
+									¶¶¶¶¶¶¶¶¶¶¶811118¶81111__118111111111___8¶8_¶
+									¶¶¶¶¶¶¶¶¶¶¶¶¶1__1888¶¶¶¶¶¶¶8______11181___18¶
+									¶¶¶¶¶¶81118¶¶8_____18188881_______11181__888¶
+									¶¶¶¶¶¶¶¶¶¶8881____________________1118118¶__¶
+									¶¶¶¶¶¶¶¶881_81___________________111181_188_¶
+									¶¶¶¶¶¶¶¶81_1¶8__________________1111881_____¶
+									¶¶¶¶¶8111_118______11_________1111888811____¶
+									¶¶¶¶¶81111181__18¶8111___1_111111811111_____¶
+									¶¶¶¶¶¶8111_8¶¶¶¶¶¶¶8______1111111111111___18¶
+									¶¶¶¶¶¶¶81111¶¶¶¶1____________111111111¶¶¶¶¶¶¶
+									¶¶¶¶¶¶¶¶8111¶¶1_______________1111111888¶¶¶8¶
+									¶¶¶¶¶¶¶¶¶81118¶88¶¶¶8881_____1111111188_18¶_¶
+									¶¶¶¶¶¶¶¶¶¶818¶¶8111__1___111111111118¶811188¶
+									¶¶¶¶¶¶¶¶¶¶¶8188888¶¶881111181111118¶¶8111188¶
+									¶¶¶¶¶¶¶¶¶¶¶¶8¶¶¶¶¶¶811111111111188¶¶81111181¶
+									¶¶¶¶¶¶8888¶¶¶¶¶8____________188¶¶¶¶8111111_1¶
+									¶¶¶¶81111¶¶¶¶¶811_1111___118¶¶¶¶¶¶81111111_¶¶
+									¶¶¶811_1¶¶¶¶¶¶¶88888¶¶¶¶8¶¶¶¶¶¶¶¶81111111_8¶¶
+									¶81___1¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶88811118__¶¶¶
+									¶___8¶¶¶88¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶888881888_¶8_¶
+									¶81_¶¶8888¶¶¶8¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶888888888__¶8__¶
+									¶¶¶¶1__1¶¶¶888¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶888888881___1¶¶¶
+									¶¶88¶¶8_81_1¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶8¶88881_11¶¶¶88¶
+									¶¶1_18¶¶8__¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶88__8¶¶¶¶1_1¶
+									¶81_1118¶¶¶__1¶¶¶¶¶¶¶8¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶
+									¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶
+									888888888888888888888888888888888888888888888
+									8___________________________________________8
+									8__¶¶¶¶¶_¶¶___¶¶_¶¶¶¶_¶¶__¶¶_¶¶¶¶¶_¶¶___¶¶__8
+									8__¶¶____¶¶¶_¶¶¶__¶¶__¶¶¶_¶¶_¶¶____¶¶¶_¶¶¶__8
+									8__¶¶¶¶__¶¶_¶_¶¶__¶¶__¶¶_¶¶¶_¶¶¶¶__¶¶_¶_¶¶__8
+									8__¶¶____¶¶___¶¶__¶¶__¶¶__¶¶_¶¶____¶¶___¶¶__8
+									8__¶¶¶¶¶_¶¶___¶¶_¶¶¶¶_¶¶__¶¶_¶¶¶¶¶_¶¶___¶¶__8
+									8___________________________________________8
+									888888888888888888888888888888888888888888888
+
+
+
   ******************************************************************************
   */
 /* USER CODE END Header */
@@ -44,7 +110,7 @@
 #define SERVO_ID9 9
 #define SERVO_ID10 10
 #define SERVO_ID11 11
-#define GOAL_POSITION_L 0x1E
+#define GOAL_POSITION_L 0x1E //posible solucion al problema del espejo >:v
 
 		//Definimos el tamano de los arreglos
 #define N1 3
@@ -97,7 +163,7 @@ const float z0_4 = 0.43;
 
 
 // OSCILADOR 1 Codo
-const float a1[N1] = {-98.7690f, 92.8651f, 22.4126f};
+/*const float a1[N1] = {-98.7690f, 92.8651f, 22.4126f};
 const float b1[N1] = {0.0666f, 0.1153f, 0.4078f};
 const float deltaTheta1[N1] = {0.6471f, 1.4800f, 4.9683f};
 float theta = 0.0f;
@@ -105,7 +171,7 @@ float theta = 0.0f;
 // OSCILADOR 2
 const float a2[N2] = {-15.8419f, 20.4244f};
 const float b2[N2] = {0.1829f, 0.7849f};
-const float deltaTheta2[N2] = {4.2979f, 5.3540f};
+const float deltaTheta2[N2] = {4.2979f, 5.3540f};*/
 
 // OSCILADOR 3 Rodilla
 const float a3[N3] = {-84.8447f, 35.2495f};
@@ -120,42 +186,183 @@ const float deltaTheta4[N4] = {0.0014f, 0.5201f, 2.0669f, 3.8113f};
 
 
 float x = 1.0f, y = 0.0f;
-float z3 = z0_3, z4 = z0_4;
+float z3 = z0_3, z4 = z0_4, z1 = z0_3, z2 = z0_4, z5 = z0_3, z6 = z0_4,z7 = z0_3, z8 = z0_4;
 float dt = 0.001f;  // Paso de integración
 float omega = 2.0f * PI;
 float z3_grados;
 float z4_grados;
-float z4_grados_i;
+float z1_grados;
+float z2_grados;
+float z5_grados;
+float z6_grados;
+float z7_grados;
+float z8_grados;
 float z3_posicion;
 float z4_posicion;
-float z4_posicion_i;
+float z1_posicion;
+float z2_posicion;
+float z5_posicion;
+float z6_posicion;
+float z7_posicion;
+float z8_posicion;
 
 
 float sumatoria3 = 0.0f;
 float atractores3 = 0.0f;
 float sumatoria4 = 0.0f;
 float atractores4 = 0.0f;
-float x_new, y_new, z3_new, z4_new;
+float atractores1 = 0.0f;
+float atractores2 = 0.0f;
+float sumatoria2 = 0.0f;
+float sumatoria1 = 0.0f;
+float atractores5 = 0.0f;
+float atractores6 = 0.0f;
+float sumatoria5 = 0.0f;
+float sumatoria6 = 0.0f;
+float atractores7 = 0.0f;
+float atractores8 = 0.0f;
+float sumatoria7 = 0.0f;
+float sumatoria8 = 0.0f;
+float x_new, y_new, z3_new, z4_new,z1_new, z2_new, z5_new, z6_new, z7_new, z8_new;
 
-void calcular_z3_z4(float theta_offset, float *z3_result, float *z4_result) {
-    float theta_local = theta + theta_offset;
-    if (theta_local >= 2.0f * PI) theta_local -= 2.0f * PI;
+void calcular_z3_z4() {
+	theta = atan2f(y, x);
+	        if (theta < 0.0f) { //Calculo de tyheta
+	            theta += 2.0f * PI;
+	}
+	        	/*
+	        	 *
+ __       ___          __   ___                ___  ___  __            __  __          ___  __   __
+|__)  /\   |   /\     |  \ |__  |     /\  |\ |  |  |__  |__)  /\     |  / /  \ |  | | |__  |__) |  \  /\
+|    /~~\  |  /~~\    |__/ |___ |___ /~~\ | \|  |  |___ |  \ /~~\    | /_ \__X \__/ | |___ |  \ |__/ /~~\
+	        	 *
+	        	 * */
+	        	atractores3 = 0.0f;
+	            for (int i = 0; i < N3; i++) {
+	            	atractores3 += a3[i] * expf(-b3[i] * fabsf(theta - deltaTheta3[i]));
+	            }
 
-    float atractores3_local = 0.0f;
-    float atractores4_local = 0.0f;
+	            atractores4 = 0.0f;
+	            for (int i = 0; i < N4; i++) {
+	            	atractores4 += a4[i] * expf(-b4[i] * fabsf(theta - deltaTheta4[i]));
+	            }
+	            /*
+	             *
+ __       ___         ___  __        __   ___  __            __  __          ___  __   __
+|__)  /\   |   /\      |  |__)  /\  /__` |__  |__)  /\     |  / /  \ |  | | |__  |__) |  \  /\
+|    /~~\  |  /~~\     |  |  \ /~~\ .__/ |___ |  \ /~~\    | /_ \__X \__/ | |___ |  \ |__/ /~~\
+	             *
+	             * */
 
-    for (int i = 0; i < N3; i++) {
-        atractores3_local += a3[i] * expf(-b3[i] * fabsf(theta_local - deltaTheta3[i]));
-    }
-    for (int i = 0; i < N4; i++) {
-        atractores4_local += a4[i] * expf(-b4[i] * fabsf(theta_local - deltaTheta4[i]));
-    }
+	            atractores1 = 0.0f;
+				for (int i = 0; i < N3; i++) {
+					atractores1 += a3[i] * expf(-b3[i] * fabsf((theta+2*PI/3) - deltaTheta3[i]));
+				}
 
-    float z3_temp = z3 + dt * (-(-beta3 * (z3 - z0_3)) + atractores3_local);
-    float z4_temp = z4 + dt * (-(-beta4 * (z4 - z0_4)) + atractores4_local);
+				// CÁLCULO DE ATRACTORES PARA OSCILADOR 4
+				atractores2 = 0.0f;
+				for (int i = 0; i < N4; i++) {
+					atractores2 += a4[i] * expf(-b4[i] * fabsf((theta+2*PI/3) - deltaTheta4[i]));
+				}
+/*
+ *
+ __       ___          __   ___                ___  ___  __           __   ___  __   ___  __
+|__)  /\   |   /\     |  \ |__  |     /\  |\ |  |  |__  |__)  /\     |  \ |__  |__) |__  /  ` |__|  /\
+|    /~~\  |  /~~\    |__/ |___ |___ /~~\ | \|  |  |___ |  \ /~~\    |__/ |___ |  \ |___ \__, |  | /~~\
+ *
+ * */
+				 atractores5 = 0.0f;
+				for (int i = 0; i < N3; i++) {
+					atractores5 += a3[i] * expf(-b3[i] * fabsf((theta+PI) - deltaTheta3[i]));
+				}
 
-    *z3_result = z3_temp;
-    *z4_result = z4_temp;
+				// CÁLCULO DE ATRACTORES PARA OSCILADOR 4
+				atractores6 = 0.0f;
+				for (int i = 0; i < N4; i++) {
+					atractores6 += a4[i] * expf(-b4[i] * fabsf((theta+PI) - deltaTheta4[i]));
+
+				}
+
+				/*
+				 *
+ __       ___         ___  __        __   ___  __           __   ___  __   ___  __
+|__)  /\   |   /\      |  |__)  /\  /__` |__  |__)  /\     |  \ |__  |__) |__  /  ` |__|  /\
+|    /~~\  |  /~~\     |  |  \ /~~\ .__/ |___ |  \ /~~\    |__/ |___ |  \ |___ \__, |  | /~~\
+				 *
+				 * */
+				 atractores7 = 0.0f;
+				for (int i = 0; i < N3; i++) {
+					atractores7 += a3[i] * expf(-b3[i] * fabsf((theta+4*PI/3) - deltaTheta3[i]));
+				}
+
+				// CÁLCULO DE ATRACTORES PARA OSCILADOR 4
+				atractores8 = 0.0f;
+				for (int i = 0; i < N4; i++) {
+					atractores8 += a4[i] * expf(-b4[i] * fabsf((theta+4*PI/3) - deltaTheta4[i]));
+				}
+
+	            // DINÁMICA DE OSCILADORES (MÉTODO DE EULER)
+
+	            // Cálculo de alpha
+	            alpha = 1.0f - sqrtf(x * x + y * y);
+
+	            // Oscilador base (x, y)
+	            x_new = x + dt * (alpha * x - omega * y);
+	            y_new = y + dt * (alpha * y + omega * x);
+
+	            // Oscilador 3
+	            float primerTermino3 = -beta3 * (z3 - z0_3);
+	            float dzdt3 = -primerTermino3 + atractores3;
+	            z3_new = z3 + dzdt3 * dt;
+
+	            // Oscilador 4
+	            float primerTermino4 = -beta4 * (z4 - z0_4);
+	            float dzdt4 = -primerTermino4 + atractores4;
+	            z4_new = z4 + dzdt4 * dt;
+
+
+	            // Oscilador 3
+				float primerTermino1 = -beta3 * (z1 - z0_3);
+				float dzdt1 = -primerTermino1 + atractores1;
+				z1_new = z1 + dzdt1 * dt;
+
+				// Oscilador 4
+				float primerTermino2 = -beta4 * (z2 - z0_4);
+				float dzdt2 = -primerTermino2 + atractores2;
+				z2_new = z2 + dzdt2 * dt;
+
+				float primerTermino5 = -beta3 * (z5 - z0_3);
+				float dzdt5 = -primerTermino5 + atractores5;
+				z5_new = z5 + dzdt5 * dt;
+
+				// Oscilador 4
+				float primerTermino6 = -beta4 * (z6 - z0_4);
+				float dzdt6 = -primerTermino6 + atractores6;
+				z6_new = z6 + dzdt6 * dt;
+
+
+				// Oscilador 3
+				float primerTermino7 = -beta3 * (z7 - z0_3);
+				float dzdt7 = -primerTermino7 + atractores7;
+				z7_new = z7 + dzdt7 * dt;
+
+				// Oscilador 4
+				float primerTermino8 = -beta4 * (z8 - z0_4);
+				float dzdt8 = -primerTermino8 + atractores8;
+				z8_new = z8 + dzdt8 * dt;
+
+	                // ACTUALIZAR ESTADO
+	            x = x_new;
+	            y = y_new;
+	            z3 = z3_new;
+	            z4 = z4_new;
+	            z1 = z1_new;
+	            z2 = z2_new;
+	            z5 = z5_new;
+				z6 = z6_new;
+				z7 = z7_new;
+				z8 = z8_new;
+
 }
 
 
@@ -167,7 +374,7 @@ void enviar_dato(uint8_t* dato, uint8_t size ){
 void syncwrite_mover_servos(uint8_t *ids, uint16_t *posiciones, uint8_t cantidad){
 	const uint8_t INSTRUCCION = 0x83; //FUNCION SYNWRITE EN HEZADECIMAL UWU
 	const uint8_t ID_BROADCAST = 0xFE;
-	const uint8_t START_ADDR = 0x1E;
+	const uint8_t START_ADDR = GOAL_POSITION_L;
 	const uint8_t BYTES_POR_SERVO = 3; //es el id + 2 bytes de posicion
 	// algo como 4 headers + N *3(id + 2 bytes) + 1 byte de cheksum
 
@@ -227,7 +434,7 @@ int main(void)
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
++  HAL_Init();
 
   /* USER CODE BEGIN Init */
 
@@ -263,60 +470,41 @@ int main(void)
     /* USER CODE END WHILE */
     MX_USB_HOST_Process();
 
-    theta = atan2f(y, x);
-        if (theta < 0.0f) { //Calculo de tyheta
-            theta += 2.0f * PI;
-    }
+    calcular_z3_z4();
+
+    z3_grados = (z3 * 24 + 148);
+    z4_grados = z4 * 38  + 98;				//DI
+
+    z7_grados = (z1 * 24 + 148);
+    z8_grados = z2 * 38  + 98;				//DD
+
+    z1_grados = (z1 * 24 + 148);
+    z2_grados = z2 * 38  + 98;				//TI
+
+    z5_grados = (z3 * 24 + 148);			//TD
+    z6_grados = z4 * 38  + 98;
 
 
-    // CÁLCULO DE ATRACTORES PARA OSCILADOR 3
-    atractores3 = 0.0f;
-    for (int i = 0; i < N3; i++) {
-    	atractores3 += a3[i] * expf(-b3[i] * fabsf(theta - deltaTheta3[i]));
-    }
-
-    // CÁLCULO DE ATRACTORES PARA OSCILADOR 4
-    atractores4 = 0.0f;
-    for (int i = 0; i < N4; i++) {
-    	atractores4 += a4[i] * expf(-b4[i] * fabsf(theta - deltaTheta4[i]));
-    }
-
-    // DINÁMICA DE OSCILADORES (MÉTODO DE EULER)
-
-    // Cálculo de alpha
-    alpha = 1.0f - sqrtf(x * x + y * y);
-
-    // Oscilador base (x, y)
-    x_new = x + dt * (alpha * x - omega * y);
-    y_new = y + dt * (alpha * y + omega * x);
-
-    // Oscilador 3
-    float primerTermino3 = -beta3 * (z3 - z0_3);
-    float dzdt3 = -primerTermino3 + atractores3;
-    z3_new = z3 + dzdt3 * dt;
-
-    // Oscilador 4
-    float primerTermino4 = -beta4 * (z4 - z0_4);
-    float dzdt4 = -primerTermino4 + atractores4;
-    z4_new = z4 + dzdt4 * dt;
-
-        // ACTUALIZAR ESTADO
-    x = x_new;
-    y = y_new;
-    z3 = z3_new;
-    z4 = z4_new;
-
-    z3_grados = (z3 * 14 + 152);
-    z4_grados = z4 * 38  + 98;
-    z4_grados_i = 180-(z4 * 38  + 98);
 
     z3_posicion = grados_a_posicion(z3_grados);
     z4_posicion = grados_a_posicion(z4_grados);
-    z4_posicion_i = grados_a_posicion(z4_grados_i);
-    //PATA delantera IZQUIERDA
+    z1_posicion = grados_a_posicion(z1_grados);
+    z2_posicion = grados_a_posicion(z2_grados);
 
-    uint8_t ids[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
-    uint16_t posiciones[] = {512, z3_posicion, z4_posicion,512, z3_posicion, z4_posicion,512, z3_posicion, z4_posicion_i,512, z3_posicion, z4_posicion_i};
+    z5_posicion = grados_a_posicion(z5_grados);
+    z6_posicion = grados_a_posicion(z6_grados);
+    z7_posicion = grados_a_posicion(z7_grados);
+    z8_posicion = grados_a_posicion(z8_grados);
+
+    uint8_t ids[] = {0, 1, 2,
+    				3, 4, 5,
+					6, 7, 8,
+					9, 10, 11};
+
+    uint16_t posiciones[] = {512, z3_posicion, z4_posicion,
+    						512, z1_posicion, z2_posicion,
+							512, z5_posicion, z6_posicion,
+							512, z7_posicion, z8_posicion};
 
 
     syncwrite_mover_servos(ids, posiciones, 12);

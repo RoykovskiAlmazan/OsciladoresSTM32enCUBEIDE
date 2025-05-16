@@ -85,7 +85,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "usb_host.h"
-#include <math.h>
+#include "math.h"
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -152,6 +153,7 @@ void MX_USB_HOST_Process(void);
 /* USER CODE BEGIN 0 */
 float alpha;
 //const float omega = 2* PI;
+float theta = 0.0f;
 const float beta1 = -20.1173;
 const float beta2 = -11.7457;
 const float beta3 = -66.9718;
@@ -163,12 +165,13 @@ const float z0_4 = 0.43;
 
 
 // OSCILADOR 1 Codo
-/*const float a1[N1] = {-98.7690f, 92.8651f, 22.4126f};
+const float a1[N1] = {-98.7690f, 92.8651f, 22.4126f};
 const float b1[N1] = {0.0666f, 0.1153f, 0.4078f};
 const float deltaTheta1[N1] = {0.6471f, 1.4800f, 4.9683f};
-float theta = 0.0f;
+
 
 // OSCILADOR 2
+/*
 const float a2[N2] = {-15.8419f, 20.4244f};
 const float b2[N2] = {0.1829f, 0.7849f};
 const float deltaTheta2[N2] = {4.2979f, 5.3540f};*/
@@ -238,8 +241,8 @@ void calcular_z3_z4() {
 	        	 *
 	        	 * */
 	        	atractores3 = 0.0f;
-	            for (int i = 0; i < N3; i++) {
-	            	atractores3 += a3[i] * expf(-b3[i] * fabsf(theta - deltaTheta3[i]));
+	            for (int i = 0; i < N1; i++) {
+	            	atractores3 += a1[i] * expf(-b1[i] * fabsf(theta - deltaTheta1[i]));
 	            }
 
 	            atractores4 = 0.0f;
@@ -255,14 +258,14 @@ void calcular_z3_z4() {
 	             * */
 
 	            atractores1 = 0.0f;
-				for (int i = 0; i < N3; i++) {
-					atractores1 += a3[i] * expf(-b3[i] * fabsf((theta+2*PI/3) - deltaTheta3[i]));
+				for (int i = 0; i < N1; i++) {
+					atractores1 += a1[i] * expf(-b1[i] * fabsf((theta + PI/2) - deltaTheta1[i]));
 				}
 
-				// CÁLCULO DE ATRACTORES PARA OSCILADOR 4
+				// C�?LCULO DE ATRACTORES PARA OSCILADOR 4
 				atractores2 = 0.0f;
 				for (int i = 0; i < N4; i++) {
-					atractores2 += a4[i] * expf(-b4[i] * fabsf((theta+2*PI/3) - deltaTheta4[i]));
+					atractores2 += a4[i] * expf(-b4[i] * fabsf((theta+ PI/2) - deltaTheta4[i]));
 				}
 /*
  *
@@ -271,17 +274,21 @@ void calcular_z3_z4() {
 |    /~~\  |  /~~\    |__/ |___ |___ /~~\ | \|  |  |___ |  \ /~~\    |__/ |___ |  \ |___ \__, |  | /~~\
  *
  * */
-				 atractores5 = 0.0f;
-				for (int i = 0; i < N3; i++) {
-					atractores5 += a3[i] * expf(-b3[i] * fabsf((theta+PI) - deltaTheta3[i]));
+
+
+
+				atractores7 = 0.0f;
+				for (int i = 0; i < N1; i++) {
+					atractores7 += a1[i] * expf(-b1[i] * fabsf((theta+ PI) - deltaTheta1[i]));
 				}
 
-				// CÁLCULO DE ATRACTORES PARA OSCILADOR 4
-				atractores6 = 0.0f;
+				// C�?LCULO DE ATRACTORES PARA OSCILADOR 4
+				atractores8 = 0.0f;
 				for (int i = 0; i < N4; i++) {
-					atractores6 += a4[i] * expf(-b4[i] * fabsf((theta+PI) - deltaTheta4[i]));
-
+					atractores8 += a4[i] * expf(-b4[i] * fabsf((theta+ PI) - deltaTheta4[i]));
 				}
+
+
 
 				/*
 				 *
@@ -290,18 +297,25 @@ void calcular_z3_z4() {
 |    /~~\  |  /~~\     |  |  \ /~~\ .__/ |___ |  \ /~~\    |__/ |___ |  \ |___ \__, |  | /~~\
 				 *
 				 * */
-				 atractores7 = 0.0f;
-				for (int i = 0; i < N3; i++) {
-					atractores7 += a3[i] * expf(-b3[i] * fabsf((theta+4*PI/3) - deltaTheta3[i]));
+				float theta_desfasado = fmodf(theta + 3 * PI / 2, 2 * PI);
+
+
+				 atractores5 = 0.0f;
+				for (int i = 0; i < N1; i++) {
+					atractores5 += a1[i] * expf(-b1[i] * fabsf(theta_desfasado - deltaTheta1[i]));
 				}
 
-				// CÁLCULO DE ATRACTORES PARA OSCILADOR 4
-				atractores8 = 0.0f;
+				// C�?LCULO DE ATRACTORES PARA OSCILADOR 4
+				atractores6 = 0.0f;
 				for (int i = 0; i < N4; i++) {
-					atractores8 += a4[i] * expf(-b4[i] * fabsf((theta+4*PI/3) - deltaTheta4[i]));
+					atractores6 += a4[i] * expf(-b4[i] * fabsf(theta_desfasado - deltaTheta4[i]));
+
 				}
 
-	            // DINÁMICA DE OSCILADORES (MÉTODO DE EULER)
+
+
+
+	            // DIN�?MICA DE OSCILADORES (MÉTODO DE EULER)
 
 	            // Cálculo de alpha
 	            alpha = 1.0f - sqrtf(x * x + y * y);
@@ -311,7 +325,7 @@ void calcular_z3_z4() {
 	            y_new = y + dt * (alpha * y + omega * x);
 
 	            // Oscilador 3
-	            float primerTermino3 = -beta3 * (z3 - z0_3);
+	            float primerTermino3 = -beta3 * (z3 - z0_1);
 	            float dzdt3 = -primerTermino3 + atractores3;
 	            z3_new = z3 + dzdt3 * dt;
 
@@ -322,7 +336,7 @@ void calcular_z3_z4() {
 
 
 	            // Oscilador 3
-				float primerTermino1 = -beta3 * (z1 - z0_3);
+				float primerTermino1 = -beta3 * (z1 - z0_1);
 				float dzdt1 = -primerTermino1 + atractores1;
 				z1_new = z1 + dzdt1 * dt;
 
@@ -331,7 +345,7 @@ void calcular_z3_z4() {
 				float dzdt2 = -primerTermino2 + atractores2;
 				z2_new = z2 + dzdt2 * dt;
 
-				float primerTermino5 = -beta3 * (z5 - z0_3);
+				float primerTermino5 = -beta3 * (z5 - z0_1);
 				float dzdt5 = -primerTermino5 + atractores5;
 				z5_new = z5 + dzdt5 * dt;
 
@@ -342,7 +356,7 @@ void calcular_z3_z4() {
 
 
 				// Oscilador 3
-				float primerTermino7 = -beta3 * (z7 - z0_3);
+				float primerTermino7 = -beta3 * (z7 - z0_1);
 				float dzdt7 = -primerTermino7 + atractores7;
 				z7_new = z7 + dzdt7 * dt;
 
@@ -354,12 +368,16 @@ void calcular_z3_z4() {
 	                // ACTUALIZAR ESTADO
 	            x = x_new;
 	            y = y_new;
+
 	            z3 = z3_new;
 	            z4 = z4_new;
+
 	            z1 = z1_new;
 	            z2 = z2_new;
+
 	            z5 = z5_new;
 				z6 = z6_new;
+
 				z7 = z7_new;
 				z8 = z8_new;
 
@@ -434,7 +452,7 @@ int main(void)
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-+  HAL_Init();
+  HAL_Init();
 
   /* USER CODE BEGIN Init */
 
@@ -469,47 +487,46 @@ int main(void)
   {
     /* USER CODE END WHILE */
     MX_USB_HOST_Process();
-
     calcular_z3_z4();
 
-    z3_grados = (z3 * 24 + 148);
-    z4_grados = z4 * 38  + 98;				//DI
+        z3_grados = (z3 * 24 + 148);
+        z4_grados = z4 * 38  + 98;				//DI
 
-    z7_grados = (z1 * 24 + 148);
-    z8_grados = z2 * 38  + 98;				//DD
+        z7_grados = (z1 * 24 + 148);
+        z8_grados = z2 * 38  + 98;				//DD
 
-    z1_grados = (z1 * 24 + 148);
-    z2_grados = z2 * 38  + 98;				//TI
+        z1_grados = (z1 * 24 + 148);
+        z2_grados = z2 * 38  + 98;				//TI
 
-    z5_grados = (z3 * 24 + 148);			//TD
-    z6_grados = z4 * 38  + 98;
-
-
-
-    z3_posicion = grados_a_posicion(z3_grados);
-    z4_posicion = grados_a_posicion(z4_grados);
-    z1_posicion = grados_a_posicion(z1_grados);
-    z2_posicion = grados_a_posicion(z2_grados);
-
-    z5_posicion = grados_a_posicion(z5_grados);
-    z6_posicion = grados_a_posicion(z6_grados);
-    z7_posicion = grados_a_posicion(z7_grados);
-    z8_posicion = grados_a_posicion(z8_grados);
-
-    uint8_t ids[] = {0, 1, 2,
-    				3, 4, 5,
-					6, 7, 8,
-					9, 10, 11};
-
-    uint16_t posiciones[] = {512, z3_posicion, z4_posicion,
-    						512, z1_posicion, z2_posicion,
-							512, z5_posicion, z6_posicion,
-							512, z7_posicion, z8_posicion};
+        z5_grados = (z3 * 24 + 148);			//TD
+        z6_grados = z4 * 38  + 98;
 
 
-    syncwrite_mover_servos(ids, posiciones, 12);
 
-    HAL_Delay(0.001);
+        z3_posicion = grados_a_posicion(z3_grados);
+        z4_posicion = grados_a_posicion(z4_grados);
+        z1_posicion = grados_a_posicion(z1_grados);
+        z2_posicion = grados_a_posicion(z2_grados);
+
+        z5_posicion = grados_a_posicion(z5_grados);
+        z6_posicion = grados_a_posicion(z6_grados);
+        z7_posicion = grados_a_posicion(z7_grados);
+        z8_posicion = grados_a_posicion(z8_grados);
+
+        uint8_t ids[] = {0, 1, 2,
+        				3, 4, 5,
+    					6, 7, 8,
+    					9, 10, 11};
+
+        uint16_t posiciones[] = {512, z3_posicion, z4_posicion,
+        						512, z1_posicion, z2_posicion,
+    							512, z5_posicion, z6_posicion,
+    							512, z7_posicion, z8_posicion};
+
+
+        syncwrite_mover_servos(ids, posiciones, 12);
+
+        HAL_Delay(0.001);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

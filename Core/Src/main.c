@@ -259,13 +259,13 @@ void calcular_z3_z4() {
 
 	            atractores1 = 0.0f;
 				for (int i = 0; i < N1; i++) {
-					atractores1 += a1[i] * expf(-b1[i] * fabsf((theta + PI/2) - deltaTheta1[i]));
+					atractores1 += a1[i] * expf(-b1[i] * fabsf(fmodf(theta + PI / 2, 2 * PI) - deltaTheta1[i]));
 				}
 
 				// C�?LCULO DE ATRACTORES PARA OSCILADOR 4
 				atractores2 = 0.0f;
 				for (int i = 0; i < N4; i++) {
-					atractores2 += a4[i] * expf(-b4[i] * fabsf((theta+ PI/2) - deltaTheta4[i]));
+					atractores2 += a4[i] * expf(-b4[i] * fabsf(fmodf(theta + PI / 2, 2 * PI) - deltaTheta4[i]));
 				}
 /*
  *
@@ -279,13 +279,13 @@ void calcular_z3_z4() {
 
 				atractores7 = 0.0f;
 				for (int i = 0; i < N1; i++) {
-					atractores7 += a1[i] * expf(-b1[i] * fabsf((theta+ PI) - deltaTheta1[i]));
+					atractores7 += a1[i] * expf(-b1[i] * fabsf(fmodf(theta + PI, 2 * PI) - deltaTheta1[i]));
 				}
 
 				// C�?LCULO DE ATRACTORES PARA OSCILADOR 4
 				atractores8 = 0.0f;
 				for (int i = 0; i < N4; i++) {
-					atractores8 += a4[i] * expf(-b4[i] * fabsf((theta+ PI) - deltaTheta4[i]));
+					atractores8 += a4[i] * expf(-b4[i] * fabsf(fmodf(theta + PI, 2 * PI) - deltaTheta4[i]));
 				}
 
 
@@ -489,17 +489,17 @@ int main(void)
     MX_USB_HOST_Process();
     calcular_z3_z4();
 
-        z3_grados = (z3 * 24 + 148);
-        z4_grados = z4 * 38  + 98;				//DI
+        z3_grados = (z3 * 40 + 135);		//24 +48 funciona decente
+        z4_grados = z4 * 38  + 98;				//DI 38 + 98 funciona descente
 
-        z7_grados = (z1 * 24 + 148);
-        z8_grados = z2 * 38  + 98;				//DD
+        z7_grados = (z7 * 40 + 135);
+        z8_grados = z8 * 38 + 98;				//DD
 
-        z1_grados = (z1 * 24 + 148);
+        z1_grados = (z1 * 40 + 135);
         z2_grados = z2 * 38  + 98;				//TI
 
-        z5_grados = (z3 * 24 + 148);			//TD
-        z6_grados = z4 * 38  + 98;
+        z5_grados = (z5 * 40 + 135);			//TD
+        z6_grados = z6 * 38  + 98;
 
 
 
@@ -526,7 +526,7 @@ int main(void)
 
         syncwrite_mover_servos(ids, posiciones, 12);
 
-        HAL_Delay(0.001);
+        //HAL_Delay(0.001);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

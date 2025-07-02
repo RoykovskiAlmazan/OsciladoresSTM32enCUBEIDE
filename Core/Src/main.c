@@ -90,6 +90,8 @@
 /* USER CODE BEGIN Includes */
 #include "math.h"
 #include "string.h"
+#include <stdio.h>
+#include <stdbool.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -99,7 +101,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define SERVO_ID0 0
+#define SERVO_ID0 12
 #define SERVO_ID1 1
 #define SERVO_ID2 2
 #define SERVO_ID3 3
@@ -132,9 +134,11 @@
 /* Private variables ---------------------------------------------------------*/
 SPI_HandleTypeDef hspi1;
 
+UART_HandleTypeDef huart4;
 UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
 UART_HandleTypeDef huart3;
+UART_HandleTypeDef huart6;
 
 /* USER CODE BEGIN PV */
 
@@ -147,6 +151,8 @@ static void MX_SPI1_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_USART3_UART_Init(void);
+static void MX_UART4_Init(void);
+static void MX_USART6_UART_Init(void);
 void MX_USB_HOST_Process(void);
 
 /* USER CODE BEGIN PFP */
@@ -174,6 +180,8 @@ const float a1[N1] = {-98.7690f, 92.8651f, 22.4126f};
 const float b1[N1] = {0.0666f, 0.1153f, 0.4078f};
 const float deltaTheta1[N1] = {0.6471f, 1.4800f, 4.9683f};
 
+volatile uint8_t dato_uart4 = 0;
+volatile bool dato_recibido_flag = false;
 
 // OSCILADOR 2
 /*
@@ -196,7 +204,7 @@ const float deltaTheta4[N4] = {0.0014f, 0.5201f, 2.0669f, 3.8113f};
 float x = 1.0f, y = 0.0f;
 float z3 = z0_3, z4 = z0_4, z1 = z0_3, z2 = z0_4, z5 = z0_3, z6 = z0_4,z7 = z0_3, z8 = z0_4;
 float dt = 0.001f;  // Paso de integración
-float omega = 2.0f * PI;
+float omega = 2.0f * PI ;
 float z3_grados;
 float z4_grados;
 float z1_grados;
@@ -213,6 +221,16 @@ float z5_posicion;
 float z6_posicion;
 float z7_posicion;
 float z8_posicion;
+
+int GainDelanteraSup = 40;
+int GainTraseraSup = 50;
+int GainDelanteraInf = 35;
+int GainTraseraInf = 38;
+int OffDelanteraSup = 120;
+int OffTraseraSup = 120;
+int OffDelanteraInf = 105;
+int OffTraseraInf = 100;
+int Giro = 512;
 
 
 float sumatoria3 = 0.0f;
@@ -232,6 +250,11 @@ float atractores8 = 0.0f;
 float sumatoria7 = 0.0f;
 float sumatoria8 = 0.0f;
 float x_new, y_new, z3_new, z4_new,z1_new, z2_new, z5_new, z6_new, z7_new, z8_new;
+
+uint8_t ids[] = {12, 1, 2,	//DI
+        		3, 4, 5,	//TI
+    			6, 7, 8,	//TD
+   				9, 10, 11};	//DD
 
 void calcular_z3_z4() {
 	theta = atan2f(y, x);
@@ -264,13 +287,13 @@ void calcular_z3_z4() {
 
 	            atractores1 = 0.0f;
 				for (int i = 0; i < N1; i++) {
-					atractores1 += a1[i] * expf(-b1[i] * fabsf(fmodf(theta + PI / 2, 2 * PI) - deltaTheta1[i]));
+					atractores1 += a1[i] * expf(-b1[i] * fabsf(fmodf(theta + PI, 2 * PI) - deltaTheta1[i])); //+Pi/2
 				}
 
 				// C�?LCULO DE ATRACTORES PARA OSCILADOR 4
 				atractores2 = 0.0f;
 				for (int i = 0; i < N4; i++) {
-					atractores2 += a4[i] * expf(-b4[i] * fabsf(fmodf(theta + PI / 2, 2 * PI) - deltaTheta4[i]));
+					atractores2 += a4[i] * expf(-b4[i] * fabsf(fmodf(theta+ PI, 2 * PI) - deltaTheta4[i]));
 				}
 /*
  *
@@ -287,7 +310,7 @@ void calcular_z3_z4() {
 					atractores7 += a1[i] * expf(-b1[i] * fabsf(fmodf(theta + PI, 2 * PI) - deltaTheta1[i]));
 				}
 
-				// C�?LCULO DE ATRACTORES PARA OSCILADOR 4
+				// CALCULO DE ATRACTORES PARA OSCILADOR 4
 				atractores8 = 0.0f;
 				for (int i = 0; i < N4; i++) {
 					atractores8 += a4[i] * expf(-b4[i] * fabsf(fmodf(theta + PI, 2 * PI) - deltaTheta4[i]));
@@ -302,7 +325,7 @@ void calcular_z3_z4() {
 |    /~~\  |  /~~\     |  |  \ /~~\ .__/ |___ |  \ /~~\    |__/ |___ |  \ |___ \__, |  | /~~\
 				 *
 				 * */
-				float theta_desfasado = fmodf(theta + 3 * PI / 2, 2 * PI);
+				float theta_desfasado = fmodf(theta , 2 * PI); //theta + 3*PI/2
 
 
 				 atractores5 = 0.0f;
@@ -310,7 +333,7 @@ void calcular_z3_z4() {
 					atractores5 += a1[i] * expf(-b1[i] * fabsf(theta_desfasado - deltaTheta1[i]));
 				}
 
-				// C�?LCULO DE ATRACTORES PARA OSCILADOR 4
+				// CACULO DE ATRACTORES PARA OSCILADOR 4
 				atractores6 = 0.0f;
 				for (int i = 0; i < N4; i++) {
 					atractores6 += a4[i] * expf(-b4[i] * fabsf(theta_desfasado - deltaTheta4[i]));
@@ -388,52 +411,101 @@ void calcular_z3_z4() {
 
 }
 
+void enviar_torque(uint8_t* dato, uint8_t size ){
+
+	HAL_UART_Transmit(&huart6, dato, size, HAL_MAX_DELAY);
+}
+
+void syncwrite_torque_limit(uint8_t *ids, uint16_t *limites, uint8_t cantidad) {
+    const uint8_t INSTRUCCION = 0x83;  // SYNC WRITE
+    const uint8_t ID_BROADCAST = 0xFE;
+    const uint8_t START_ADDR = 0x22;   // Dirección de Torque Limit Left protocolo del dinamixel
+    const uint8_t BYTES_POR_DATO = 2;  // Torque usa 2 bytes segun yo
+    const uint8_t BYTES_POR_SERVO = 1 + BYTES_POR_DATO;
+
+    uint8_t longitud = 4 + cantidad * BYTES_POR_SERVO;
+    uint8_t paquete[7 + cantidad * BYTES_POR_SERVO + 1];  // Cabecera + datos + checksum
+
+    int i = 0;
+    paquete[i++] = 0xFF;
+    paquete[i++] = 0xFF;
+    paquete[i++] = ID_BROADCAST;
+    paquete[i++] = longitud;
+    paquete[i++] = INSTRUCCION;
+    paquete[i++] = START_ADDR;
+    paquete[i++] = BYTES_POR_DATO;
+
+    for (uint8_t j = 0; j < cantidad; j++) {
+        uint16_t torque = limites[j];
+        paquete[i++] = ids[j];
+        paquete[i++] = torque & 0xFF;         // LSB
+        paquete[i++] = (torque >> 8) & 0xFF;  // MSB
+    }
+
+    // Calcular checksum
+    uint8_t checksum = 0;
+    for (int j = 2; j < i; j++) {
+        checksum += paquete[j];
+    }
+    checksum = ~checksum;
+    paquete[i++] = checksum;
+
+    // Enviar por UART
+    enviar_torque(paquete, i);
+}
+
+
+
+
+
+
+
 
 void enviar_dato(uint8_t* dato, uint8_t size ){
 
-	HAL_UART_Transmit(&huart2, dato, size, HAL_MAX_DELAY);
-}
-void datos_bluetooth(uint8_t* dato, uint8_t size){
-	HAL_UART_Transmit(&huart3, dato, size, HAL_MAX_DELAY);
+	HAL_UART_Transmit(&huart6, dato, size, HAL_MAX_DELAY);
 }
 
-void syncwrite_mover_servos(uint8_t *ids, uint16_t *posiciones, uint8_t cantidad){
-	const uint8_t INSTRUCCION = 0x83; //FUNCION SYNWRITE EN HEZADECIMAL UWU
-	const uint8_t ID_BROADCAST = 0xFE;
-	const uint8_t START_ADDR = GOAL_POSITION_L;
-	const uint8_t BYTES_POR_SERVO = 3; //es el id + 2 bytes de posicion
-	// algo como 4 headers + N *3(id + 2 bytes) + 1 byte de cheksum
+void syncwrite_mover_servos(uint8_t *ids, uint16_t *posiciones, uint8_t cantidad) {
+    const uint8_t INSTRUCCION = 0x83;  // SYNC WRITE
+    const uint8_t ID_BROADCAST = 0xFE;
+    const uint8_t START_ADDR = GOAL_POSITION_L;
+    const uint8_t BYTES_POR_DATO = 2;  // posición ocupa 2 bytes
+    const uint8_t BYTES_POR_SERVO = 1 + BYTES_POR_DATO;
 
-	uint8_t longitud = 4+ cantidad*BYTES_POR_SERVO;
-	uint8_t paquete[6 + cantidad * BYTES_POR_SERVO];
+    uint8_t longitud = 4 + cantidad * BYTES_POR_SERVO;
 
-	int i = 0;
-	    paquete[i++] = 0xFF;
-	    paquete[i++] = 0xFF;
-	    paquete[i++] = ID_BROADCAST;
-	    paquete[i++] = longitud;
-	    paquete[i++] = INSTRUCCION;
-	    paquete[i++] = START_ADDR;
-	    paquete[i++] = 2; // 2 bytes por dato (posición)
+    uint8_t paquete[7 + cantidad * BYTES_POR_SERVO + 1]; // Cabecera + cuerpo + checksum
+    int i = 0;
 
-	    for (uint8_t j = 0; j < cantidad; j++) {
-	            uint16_t pos = posiciones[j];
-	            paquete[i++] = ids[j];         // ID del servo
-	            paquete[i++] = pos & 0xFF;     // LSB
-	            paquete[i++] = (pos >> 8) & 0xFF; // MSB
-	        }
-	    //cheksum
+    paquete[i++] = 0xFF;
+    paquete[i++] = 0xFF;
+    paquete[i++] = ID_BROADCAST;
+    paquete[i++] = longitud;
+    paquete[i++] = INSTRUCCION;
+    paquete[i++] = START_ADDR;
+    paquete[i++] = BYTES_POR_DATO;
 
-	    uint8_t checksum = 0;
-	       for (int j = 2; j < i; j++) {
-	           checksum += paquete[j];
-	       }
-	       checksum = ~checksum;
-	       paquete[i++] = checksum;
+    for (uint8_t j = 0; j < cantidad; j++) {
+        uint16_t pos = posiciones[j];
+        paquete[i++] = ids[j];
+        paquete[i++] = pos & 0xFF;         // LSB
+        paquete[i++] = (pos >> 8) & 0xFF;  // MSB
+    }
 
-	       // Enviar por UART
-	       enviar_dato(paquete, i);
+    // Calcular checksum
+    uint8_t checksum = 0;
+    for (int j = 2; j < i; j++) {
+        checksum += paquete[j];
+    }
+    checksum = ~checksum;
+    paquete[i++] = checksum;
+
+    // Enviar por UART
+    enviar_dato(paquete, i);  // i contiene el total de bytes
 }
+
+
 
 uint16_t grados_a_posicion(float grados) {
     if (grados < 0.0f) grados = 0.0f;
@@ -441,16 +513,13 @@ uint16_t grados_a_posicion(float grados) {
     return (uint16_t)(grados * (1023.0f / 300.0f));
 }
 
-
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
-{
-    if (huart->Instance == USART3)
-    {
-
-        // Reinicia la recepción para el siguiente byte
-        HAL_UART_Receive_IT(&huart3, &rxdata, 1);
-    }
+float sigmoid_escalada(float x, float k, float x0) {
+    float exponente = -k * (x - x0);
+    float base = 1.0f / (1.0f + expf(exponente));
+    float data = grados_a_posicion(70.0f * base);
+    return data;
 }
+
 
 
 
@@ -489,20 +558,48 @@ int main(void)
   MX_USART2_UART_Init();
   MX_USART1_UART_Init();
   MX_USART3_UART_Init();
+  MX_UART4_Init();
+  MX_USART6_UART_Init();
   /* USER CODE BEGIN 2 */
-  HAL_UART_Receive_IT(&huart3, &rxdata, 1);
-
-  uint8_t id[] = {0, 1, 2,3,4,5,6,7,8,9,10,11};
-  uint16_t posicion[] = {512, 512, 410,512, 512, 410,512, 512, 410,512, 512, 410};
 
 
-  syncwrite_mover_servos(id, posicion, 12);
+  uint16_t torques[] = {1023, 512, 512,
+		  512, 512, 1023,
+		  512, 512, 1023,
+		  1023, 512, 512};  // Torque máximo para cada servo
+  syncwrite_torque_limit(ids, torques, 12);
+  //torques
 
-  HAL_Delay(3000);
 
-  uint8_t mensaje[] = "Dato enviado por bluetooth";
 
-  datos_bluetooth(mensaje,sizeof(mensaje)-1);
+
+  //moviento de pararse
+  HAL_Delay(5000);
+
+  //uint16_t posicion[] = {512, 512, 512, 512, 512, 512, 512, 512, 512, 500, 512, 512};
+  //syncwrite_mover_servos(ids, posicion, 12);
+
+  HAL_Delay(2000);
+  //movimeinto de sentarse
+
+ /*
+   uint16_t posicion_sentado[] = {512, 512, 512,512, 512, 350, 512, 512, 350,512, 512, 512};
+  syncwrite_mover_servos(ids, posicion_sentado, 12);
+  syncwrite_mover_servos(ids, posicion_sentado, 12);
+  syncwrite_mover_servos(ids, posicion_sentado, 12);
+  syncwrite_mover_servos(ids, posicion_sentado, 12);
+
+
+
+
+  */
+
+
+
+
+  HAL_UART_Receive_IT(&huart4, (uint8_t *)&dato_uart4, 1);
+
+
 
 
   /* USER CODE END 2 */
@@ -512,52 +609,90 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-    MX_USB_HOST_Process();
-
     /* USER CODE BEGIN 3 */
-    MX_USB_HOST_Process();
-    calcular_z3_z4();
-
-        z3_grados = (z3 * 40 + 135);		//24 +48 funciona decente
-        z4_grados = z4 * 38  + 98;				//DI 38 + 98 funciona descente
-
-        z7_grados = (z7 * 40 + 135);
-        z8_grados = z8 * 38 + 98;				//DD
-
-        z1_grados = (z1 * 40 + 135);
-        z2_grados = z2 * 38  + 98;				//TI
-
-        z5_grados = (z5 * 40 + 135);			//TD
-        z6_grados = z6 * 38  + 98;
+	  MX_USB_HOST_Process();
 
 
+	  calcular_z3_z4();
 
-        z3_posicion = grados_a_posicion(z3_grados);
-        z4_posicion = grados_a_posicion(z4_grados);
-        z1_posicion = grados_a_posicion(z1_grados);
-        z2_posicion = grados_a_posicion(z2_grados);
+	 	        z3_grados = (z3 * GainDelanteraSup + OffDelanteraSup);		//24 +48 funciona decente
+	 	        z4_grados = z4 * GainDelanteraInf  + OffDelanteraInf;				//DI 38 + 98 funciona descente
 
-        z5_posicion = grados_a_posicion(z5_grados);
-        z6_posicion = grados_a_posicion(z6_grados);
-        z7_posicion = grados_a_posicion(z7_grados);
-        z8_posicion = grados_a_posicion(z8_grados);
+	 	        z7_grados = (z7 * GainDelanteraSup + OffDelanteraSup);
+	 	        z8_grados = z8 * GainDelanteraInf + OffDelanteraInf;				//DD
 
-        uint8_t ids[] = {0, 1, 2,
-        				3, 4, 5,
-    					6, 7, 8,
-    					9, 10, 11};
+	 	        z1_grados = (z1 * GainTraseraSup + OffTraseraSup);
+	 	        z2_grados = z2 * GainTraseraInf  + OffTraseraInf;				//TI
 
-        uint16_t posiciones[] = {512, z3_posicion, z4_posicion,
-        						512, z1_posicion, z2_posicion,
-    							512, z5_posicion, z6_posicion,
-    							512, z7_posicion, z8_posicion};
+	 	        z5_grados = (z5 * GainTraseraSup + OffTraseraSup);			//TD Offset de 135
+	 	        z6_grados = z6 * GainTraseraInf  + OffDelanteraInf;
 
 
-        syncwrite_mover_servos(ids, posiciones, 12);
 
-        //HAL_Delay(0.001);
+	 	        z3_posicion = grados_a_posicion(z3_grados);
+	 	        z4_posicion = grados_a_posicion(z4_grados);
+	 	        z1_posicion = grados_a_posicion(z1_grados);
+	 	        z2_posicion = grados_a_posicion(z2_grados);
+
+	 	        z5_posicion = grados_a_posicion(z5_grados);
+	 	        z6_posicion = grados_a_posicion(z6_grados);
+	 	        z7_posicion = grados_a_posicion(z7_grados);
+	 	        z8_posicion = grados_a_posicion(z8_grados);
+
+	 	        uint8_t ids[] = {0, 1, 2,
+	 	        				3, 4, 5,
+	 	    					6, 7, 8,
+	 	    					9, 10, 11};
+
+
+
+	  if (dato_recibido_flag){
+		  dato_recibido_flag = false;
+
+	      }
+
+	  switch (dato_uart4){
+	  	        case 1:
+	  	        	Giro = 512;
+	  	        	break;
+	  	        case 2:
+	  	        	Giro = 440;
+	  	        	break;
+	  	        case 3:
+	  	        	Giro = 590;
+	  	        	break;
+	  	        case 4:
+	  	        	//uint16_t posicion_sentado[] = {512, 512, 512,512, 512, 350, 512, 512, 350,512, 512,512};
+	  	        	Giro = 512; //0 9
+	  	        	z3_posicion = 512;//1
+		 	        z4_posicion = 550;
+		 	        z1_posicion = 550;
+		 	        z2_posicion = 370; //2
+
+		 	        z5_posicion = 550;
+		 	        z6_posicion = 370; //11
+		 	        z7_posicion = 512; //10
+		 	        z8_posicion = 550;
+	  	         break;
+	  	        }
+
+	  uint16_t posiciones[] = {Giro, z3_posicion, z4_posicion, // DI
+	  	  	        			512, z1_posicion, z2_posicion,
+	  	  	    				512, z5_posicion, z6_posicion,
+	  	  	    				Giro, z7_posicion, z8_posicion};//DD
+
+
+
+
+
+
+
+	        syncwrite_mover_servos(ids, posiciones, 12);
+	        HAL_Delay(0.001);
 
   }
+
+
   /* USER CODE END 3 */
 }
 
@@ -645,6 +780,39 @@ static void MX_SPI1_Init(void)
 }
 
 /**
+  * @brief UART4 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_UART4_Init(void)
+{
+
+  /* USER CODE BEGIN UART4_Init 0 */
+
+  /* USER CODE END UART4_Init 0 */
+
+  /* USER CODE BEGIN UART4_Init 1 */
+
+  /* USER CODE END UART4_Init 1 */
+  huart4.Instance = UART4;
+  huart4.Init.BaudRate = 115200;
+  huart4.Init.WordLength = UART_WORDLENGTH_8B;
+  huart4.Init.StopBits = UART_STOPBITS_1;
+  huart4.Init.Parity = UART_PARITY_NONE;
+  huart4.Init.Mode = UART_MODE_TX_RX;
+  huart4.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart4.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart4) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN UART4_Init 2 */
+
+  /* USER CODE END UART4_Init 2 */
+
+}
+
+/**
   * @brief USART1 Initialization Function
   * @param None
   * @retval None
@@ -726,20 +894,53 @@ static void MX_USART3_UART_Init(void)
 
   /* USER CODE END USART3_Init 1 */
   huart3.Instance = USART3;
-  huart3.Init.BaudRate = 9600;
+  huart3.Init.BaudRate = 1000000;
   huart3.Init.WordLength = UART_WORDLENGTH_8B;
   huart3.Init.StopBits = UART_STOPBITS_1;
   huart3.Init.Parity = UART_PARITY_NONE;
   huart3.Init.Mode = UART_MODE_TX_RX;
   huart3.Init.HwFlowCtl = UART_HWCONTROL_NONE;
   huart3.Init.OverSampling = UART_OVERSAMPLING_16;
-  if (HAL_UART_Init(&huart3) != HAL_OK)
+  if (HAL_HalfDuplex_Init(&huart3) != HAL_OK)
   {
     Error_Handler();
   }
   /* USER CODE BEGIN USART3_Init 2 */
 
   /* USER CODE END USART3_Init 2 */
+
+}
+
+/**
+  * @brief USART6 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USART6_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART6_Init 0 */
+
+  /* USER CODE END USART6_Init 0 */
+
+  /* USER CODE BEGIN USART6_Init 1 */
+
+  /* USER CODE END USART6_Init 1 */
+  huart6.Instance = USART6;
+  huart6.Init.BaudRate = 1000000;
+  huart6.Init.WordLength = UART_WORDLENGTH_8B;
+  huart6.Init.StopBits = UART_STOPBITS_1;
+  huart6.Init.Parity = UART_PARITY_NONE;
+  huart6.Init.Mode = UART_MODE_TX_RX;
+  huart6.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart6.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_HalfDuplex_Init(&huart6) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART6_Init 2 */
+
+  /* USER CODE END USART6_Init 2 */
 
 }
 
@@ -864,6 +1065,17 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+    if (huart->Instance == UART4)
+    {
+
+    	dato_recibido_flag = true;
+
+        HAL_UART_Receive_IT(&huart4, (uint8_t *)&dato_uart4, 1);
+    }
+}
+
 
 /* USER CODE END 4 */
 
@@ -881,6 +1093,8 @@ void Error_Handler(void)
   }
   /* USER CODE END Error_Handler_Debug */
 }
+
+
 
 #ifdef  USE_FULL_ASSERT
 /**

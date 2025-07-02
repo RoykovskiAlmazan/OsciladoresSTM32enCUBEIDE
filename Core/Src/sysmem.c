@@ -67,8 +67,7 @@ void *_sbrk(ptrdiff_t incr)
 
   /* Protect heap from growing into the reserved MSP stack */
   if (__sbrk_heap_end + incr > max_heap)
-  {
-    errno = ENOMEM;
+  {    errno = ENOMEM;
     return (void *)-1;
   }
 
